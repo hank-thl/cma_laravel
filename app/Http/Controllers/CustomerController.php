@@ -17,7 +17,7 @@ class CustomerController extends Controller
         if($memberEmail!='[]')return response("That email is taken", Response::HTTP_UNAUTHORIZED);
         // 密碼加密
         $hashPassword = Hash::make("$request->memberPassword");
-        $addMember = Customer::insert(
+        Customer::insert(
                 [
                     'member_account' => "$request->memberAccount",
                     'member_password' => "$hashPassword",
@@ -35,7 +35,9 @@ class CustomerController extends Controller
                     'update_date'=> now(),
                 ]
             );
-        return response($addMember, Response::HTTP_CREATED);
+        return response()->json([
+            'returnCode' => "0000",
+        ]);
     }
 
     function login(Request $request)
