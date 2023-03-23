@@ -44,7 +44,10 @@ class CustomerController extends Controller
     {
         // 從資料庫取出前端輸入會員帳號，若無直接回傳
         $member = Customer::where('member_account', '=', "$request->memberAccount")->get();
-        if($member=='[]')return response('Account does not exist',Response::HTTP_BAD_REQUEST);
+        if($member=='[]'){
+            $member = Customer::where('member_email', '=', "$request->memberAccount")->get();
+        }
+        if($member=='[]') return response('Account does not exist',Response::HTTP_BAD_REQUEST);
         // 有帳號則比對密碼
         if (Hash::check("$request->memberPassword", $member[0]->member_password)) // 比對密碼
         {
