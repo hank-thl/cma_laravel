@@ -37,7 +37,7 @@ class CustomerController extends Controller
             );
         return response()->json([
             'returnCode' => "0000",
-        ]);
+        ],201);
     }
 
     function login(Request $request)
